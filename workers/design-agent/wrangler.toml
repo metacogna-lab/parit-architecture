@@ -1,0 +1,10 @@
+name = "parit-design-agent"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# ============================================================================
+# Environment Variables (Secrets)
+# ============================================================================
+# Set secrets with: wrangler secret put GEMINI_API_KEY
+# For local dev, create .dev.vars file with:
+# GEMINI_API_KEY=your_key_here

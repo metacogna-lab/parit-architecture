@@ -1,0 +1,74 @@
+name: Smart Multi-Worker Deploy
+
+on:
+  push:
+    branches: [main, production]
+
+jobs:
+  # 1. Detect Changes
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      shared: ${{ steps.filter.outputs.shared }}
+      supervisor: ${{ steps.filter.outputs.supervisor }}
+      data: ${{ steps.filter.outputs.data }}
+      prd: ${{ steps.filter.outputs.prd }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            shared: ['packages/shared/**']
+            supervisor: ['workers/supervisor/**', 'packages/shared/**']
+            data: ['workers/data-agent/**', 'packages/shared/**']
+            prd: ['workers/prd-agent/**', 'packages/shared/**']
+
+  # 2. Sequential Deployment (Agents first, then Supervisor)
+  deploy-agents:
+    needs: changes
+    runs-on: ubuntu-latest
+    if: ${{ needs.changes.outputs.data == 'true' || needs.changes.outputs.prd == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - name: Install Dependencies
+        run: bun install
+      
+      - name: Deploy Data Agent
+        if: steps.filter.outputs.data == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: 'workers/data-agent'
+          command: deploy --env ${{ github.ref == 'refs/heads/production' && 'production' || 'staging' }}
+
+      - name: Deploy PRD Agent
+        if: steps.filter.outputs.prd == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: 'workers/prd-agent'
+          command: deploy --env ${{ github.ref == 'refs/heads/production' && 'production' || 'staging' }}
+
+  deploy-supervisor:
+    needs: [changes, deploy-agents]
+    runs-on: ubuntu-latest
+    # Deploy if supervisor changed OR if shared logic changed
+    if: always() && (needs.changes.outputs.supervisor == 'true' || needs.changes.outputs.shared == 'true')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Deploy Supervisor
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: 'workers/supervisor'
+          command: deploy --env ${{ github.ref == 'refs/heads/production' && 'production' || 'staging' }}

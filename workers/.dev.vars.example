@@ -1,0 +1,37 @@
+# Local Development Environment Variables
+# Copy this file to .dev.vars in each worker directory that needs it
+# .dev.vars files are automatically loaded by Wrangler during local development
+
+# ============================================================================
+# Required for all agent workers (prd, data, design, logic, api, frontend, deployment)
+# ============================================================================
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Get your Gemini API key from: https://aistudio.google.com/app/apikey
+
+# ============================================================================
+# Usage:
+# ============================================================================
+# 1. Copy this file to each agent worker directory:
+#    cp workers/.dev.vars.example workers/prd-agent/.dev.vars
+#    cp workers/.dev.vars.example workers/data-agent/.dev.vars
+#    cp workers/.dev.vars.example workers/design-agent/.dev.vars
+#    cp workers/.dev.vars.example workers/logic-agent/.dev.vars
+#    cp workers/.dev.vars.example workers/api-agent/.dev.vars
+#    cp workers/.dev.vars.example workers/frontend-agent/.dev.vars
+#    cp workers/.dev.vars.example workers/deployment-agent/.dev.vars
+#
+# 2. Replace 'your_gemini_api_key_here' with your actual API key
+#
+# 3. Run local dev: cd workers/supervisor && wrangler dev
+#
+# ============================================================================
+# Production Deployment:
+# ============================================================================
+# For production, set secrets using wrangler CLI:
+#    cd workers/prd-agent && wrangler secret put GEMINI_API_KEY
+#    cd workers/data-agent && wrangler secret put GEMINI_API_KEY
+#    # ... repeat for all 7 agent workers
+#
+# Or use the automated script:
+#    ./scripts/set-secrets.sh

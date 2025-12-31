@@ -1,0 +1,163 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "parit-supervisor"
+main = "workers/supervisor/src/index.ts"
+compatibility_date = "2024-01-01"
+node_compat = true
+
+# ============================================================================
+# Worker Configuration
+# ============================================================================
+workers_dev = true
+route = "build.metacogna.ai/*"
+account_id = "764864866818037a2cf29dc6584b13fc" # Add your Cloudflare account ID here
+
+# ============================================================================
+# D1 Database Bindings
+# ============================================================================
+# Note: Create databases with:
+#   wrangler d1 create parit-d1
+#
+# Then apply migrations with:
+#   wrangler d1 execute parit-d1 --file=./migrations/0001_initial.sq
+
+[[d1_databases]]
+binding = "DB"              # Available as env.DB in worker code
+database_name = "parit-d1"
+database_id = ""            # Add your database ID here after creating with wrangler d1 create
+
+# ============================================================================
+# R2 Storage Bindings
+# ============================================================================
+# Note: Create buckets with:
+#   wrangler r2 bucket create parit-dev-artifacts
+#   wrangler r2 bucket create parit-staging-artifacts
+#   wrangler r2 bucket create parit-prod-artifacts
+
+[[r2_buckets]]
+binding = "STORAGE"         # Available as env.STORAGE in worker code
+bucket_name = "parit-artifacts"
+preview_bucket_name = "parit-artifacts"
+
+# ============================================================================
+# Service Bindings (Inter-Worker Communication)
+# ============================================================================
+# Binds specialized agent workers to supervisor for routing
+
+[[services]]
+binding = "PRD_AGENT"
+service = "parit-prd-agent"
+environment = "production"
+
+[[services]]
+binding = "DATA_AGENT"
+service = "parit-data-agent"
+environment = "production"
+
+[[services]]
+binding = "DESIGN_AGENT"
+service = "parit-design-agent"
+environment = "production"
+
+[[services]]
+binding = "LOGIC_AGENT"
+service = "parit-logic-agent"
+environment = "production"
+
+[[services]]
+binding = "API_AGENT"
+service = "parit-api-agent"
+environment = "production"
+
+[[services]]
+binding = "FRONTEND_AGENT"
+service = "parit-frontend-agent"
+environment = "production"
+
+[[services]]
+binding = "DEPLOYMENT_AGENT"
+service = "parit-deployment-agent"
+environment = "production"
+
+# ============================================================================
+# Environment Variables & Secrets
+# ============================================================================
+# Set secrets with:
+#   wrangler secret put GEMINI_API_KEY
+#   wrangler secret put OPENAI_API_KEY
+#   wrangler secret put ANTHROPIC_API_KEY
+#   wrangler secret put LANGSMITH_API_KEY
+
+[vars]
+ENVIRONMENT = "development"
+LANGCHAIN_TRACING_V2 = "true"
+LANGCHAIN_PROJECT = "pratejra-architecture-v1"
+LANGCHAIN_ENDPOINT = "https://api.smith.langchain.com"
+
+# ============================================================================
+# Production Environment
+# ============================================================================
+[env.production]
+name = "parit-build"
+route = "build.metacogna.ai/*"
+vars = { ENVIRONMENT = "production" }
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "parit-build"
+database_id = ""            # Add production database ID
+
+[[env.production.r2_buckets]]
+binding = "STORAGE"
+bucket_name = "parit-prod-artifacts"
+
+# Production service bindings
+[[env.production.services]]
+binding = "PRD_AGENT"
+service = "parit-prd-agent"
+environment = "production"
+
+[[env.production.services]]
+binding = "DATA_AGENT"
+service = "parit-data-agent"
+environment = "production"
+
+[[env.production.services]]
+binding = "DESIGN_AGENT"
+service = "parit-design-agent"
+environment = "production"
+
+[[env.production.services]]
+binding = "LOGIC_AGENT"
+service = "parit-logic-agent"
+environment = "production"
+
+[[env.production.services]]
+binding = "API_AGENT"
+service = "parit-api-agent"
+environment = "production"
+
+[[env.production.services]]
+binding = "FRONTEND_AGENT"
+service = "parit-frontend-agent"
+environment = "production"
+
+[[env.production.services]]
+binding = "DEPLOYMENT_AGENT"
+service = "parit-deployment-agent"
+environment = "production"
+
+# ============================================================================
+# Build Configuration
+# ============================================================================
+[build]
+command = "bun run build"
+
+[build.upload]
+format = "service-worker"
+
+# ============================================================================
+# Observability
+# ============================================================================
+[observability]
+enabled = true
+head_sampling_rate = 1.0

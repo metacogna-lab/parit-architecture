@@ -1,0 +1,98 @@
+
+# Parit Architecture: Production Deployment Guide
+
+This guide details the deployment of the Parit backend to Cloudflare's Edge using D1 (SQL Database) and R2 (Object Storage).
+
+## 1. Prerequisites
+
+- **Node.js** v18+
+- **Cloudflare Account**
+- **Wrangler CLI** installed (`npm install -g wrangler`)
+
+## 2. Environment Setup
+
+Parit uses a tiered environment strategy defined in `wrangler.toml`:
+1. **Development (Dev)**: Local execution / Preview.
+2. **Staging**: `staging.parit.sh` - For integration testing.
+3. **Production**: `parit.sh` - Live user traffic.
+
+### A. Authenticate Wrangler
+```bash
+wrangler login
+```
+
+### B. Create D1 Databases
+You need to create 3 separate databases and update `wrangler.toml` with the IDs.
+
+```bash
+# 1. Create Dev DB
+wrangler d1 create parit_dev
+# Copy the "database_id" output to 'd1_databases' in wrangler.toml
+
+# 2. Create Staging DB
+wrangler d1 create parit_staging
+# Copy "database_id" to [env.staging.d1_databases]
+
+# 3. Create Prod DB
+wrangler d1 create parit_prod
+# Copy "database_id" to [env.production.d1_databases]
+```
+
+### C. Create R2 Buckets
+Create buckets for artifact storage.
+
+```bash
+wrangler r2 bucket create parit-dev-artifacts
+wrangler r2 bucket create parit-staging-artifacts
+wrangler r2 bucket create parit-prod-artifacts
+```
+*Note: Ensure the bucket names match exactly what is in `wrangler.toml`.*
+
+## 3. Database Migration
+
+Initialize the schema for all environments.
+
+```bash
+# Local/Dev
+wrangler d1 execute parit_dev --local --file=./migrations/0001_initial.sql
+
+# Staging
+wrangler d1 execute parit_staging --file=./migrations/0001_initial.sql
+
+# Production
+wrangler d1 execute parit_prod --file=./migrations/0001_initial.sql
+```
+
+## 4. Frontend Configuration
+
+The React frontend needs to know where the backend lives.
+
+1. Create a `.env.production` file:
+```env
+VITE_API_BASE_URL=https://api.parit.sh
+VITE_ENVIRONMENT=production
+```
+
+2. Update `store.ts` default settings or allow user to toggle `providerPreference` to 'cloudflare'.
+
+## 5. Deployment
+
+### Staging Deployment
+```bash
+wrangler deploy --env staging
+```
+Test the worker at `https://parit-backend-staging.<your-subdomain>.workers.dev` (or your custom domain).
+
+### Production Deployment
+```bash
+wrangler deploy --env production
+```
+
+## 6. Observability & LangSmith
+
+To link LangSmith traces with Cloudflare logs:
+1. Ensure `LANGCHAIN_API_KEY` is set in your Cloudflare secrets.
+   ```bash
+   wrangler secret put LANGCHAIN_API_KEY
+   ```
+2. The frontend passes `X-Cloud-Trace-Context`. The Worker logs this ID to `system_logs` (D1), allowing you to join Frontend Actions -> Worker Execution -> LangSmith Trace.

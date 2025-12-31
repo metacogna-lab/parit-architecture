@@ -1,0 +1,15 @@
+name = "parit-api-agent"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# ============================================================================
+# Environment Variables (Secrets)
+# ============================================================================
+# Set secrets with: wrangler secret put GEMINI_API_KEY
+# For local dev, create .dev.vars file with:
+# GEMINI_API_KEY=your_key_here
+
+[vars]
+COGNITO_REGION = "ap-southeast-2"
+COGNITO_CLIENT_ID = "Ov23libUijHS9BJoA7ye"
+COGNITO_USER_POOL_ID = "ap-southeast-2_fgz2vg9Lq"

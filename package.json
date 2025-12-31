@@ -1,0 +1,25 @@
+{
+  "name": "parit-architecture-monorepo",
+  "private": true,
+  "workspaces": [
+    "workers/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun --filter '*' dev",
+    "build": "bun --filter '*' build",
+    "deploy:staging": "bun run --filter '*' deploy:staging",
+    "deploy:prod": "bun run --filter '*' deploy:prod",
+    "clean": "rm -rf node_modules **/node_modules bun.lockb"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240101.0",
+    "@playwright/test": "^1.57.0",
+    "@types/bun": "latest",
+    "typescript": "^5.3.0",
+    "wrangler": "^3.28.0"
+  },
+  "packageManager": "bun@1.0.0",
+  "module": "index.tsx",
+  "type": "module"
+}
