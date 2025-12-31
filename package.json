@@ -1,6 +1,8 @@
 {
   "name": "parit-architecture-monorepo",
   "private": true,
+  "output": "dist",
+  "main": "dist/index.js",
   "workspaces": [
     "workers/*",
     "packages/*"
