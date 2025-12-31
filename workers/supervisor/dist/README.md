@@ -1,0 +1,1 @@
+This folder contains the built output assets for the worker "parit-supervisor" generated at 2025-12-31T22:59:14.537Z.
