@@ -86,7 +86,7 @@ export const Layout: React.FC<LayoutProps> = ({
                 exit={{ opacity: 0 }}
                 className="font-serif font-black text-2xl tracking-tighter"
               >
-                PARIT.
+                PARTI.
               </motion.div>
             ) : (
                <motion.div 

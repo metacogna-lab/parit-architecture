@@ -1,5 +1,5 @@
 import { LOGIC_WORKER_PROMPT } from './systemPrompts';
-import { callGeminiAPI, callGeminiStreamingAPI, buildPrompt, type AgentResponse } from '@parit/shared';
+import { callGeminiAPI, callGeminiStreamingAPI, buildPrompt, type AgentResponse } from '@parti/shared';
 
 interface ExecutionContext {
   waitUntil(promise: Promise<any>): void;

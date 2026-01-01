@@ -1,7 +1,7 @@
 
-# Parit Architecture: Production Deployment Guide
+# Parti Architecture: Production Deployment Guide
 
-This guide details the deployment of the Parit backend to Cloudflare's Edge using D1 (SQL Database) and R2 (Object Storage).
+This guide details the deployment of the Parti backend to Cloudflare's Edge using D1 (SQL Database) and R2 (Object Storage).
 
 ## 1. Prerequisites
 
@@ -11,10 +11,10 @@ This guide details the deployment of the Parit backend to Cloudflare's Edge usin
 
 ## 2. Environment Setup
 
-Parit uses a tiered environment strategy defined in `wrangler.toml`:
+Parti uses a tiered environment strategy defined in `wrangler.toml`:
 1. **Development (Dev)**: Local execution / Preview.
-2. **Staging**: `staging.parit.sh` - For integration testing.
-3. **Production**: `parit.sh` - Live user traffic.
+2. **Staging**: `staging.parti.sh` - For integration testing.
+3. **Production**: `parti.sh` - Live user traffic.
 
 ### A. Authenticate Wrangler
 ```bash
@@ -26,15 +26,15 @@ You need to create 3 separate databases and update `wrangler.toml` with the IDs.
 
 ```bash
 # 1. Create Dev DB
-wrangler d1 create parit_dev
+wrangler d1 create parti_dev
 # Copy the "database_id" output to 'd1_databases' in wrangler.toml
 
 # 2. Create Staging DB
-wrangler d1 create parit_staging
+wrangler d1 create parti_staging
 # Copy "database_id" to [env.staging.d1_databases]
 
 # 3. Create Prod DB
-wrangler d1 create parit_prod
+wrangler d1 create parti_prod
 # Copy "database_id" to [env.production.d1_databases]
 ```
 
@@ -42,9 +42,9 @@ wrangler d1 create parit_prod
 Create buckets for artifact storage.
 
 ```bash
-wrangler r2 bucket create parit-dev-artifacts
-wrangler r2 bucket create parit-staging-artifacts
-wrangler r2 bucket create parit-prod-artifacts
+wrangler r2 bucket create parti-dev-artifacts
+wrangler r2 bucket create parti-staging-artifacts
+wrangler r2 bucket create parti-prod-artifacts
 ```
 *Note: Ensure the bucket names match exactly what is in `wrangler.toml`.*
 
@@ -54,13 +54,13 @@ Initialize the schema for all environments.
 
 ```bash
 # Local/Dev
-wrangler d1 execute parit_dev --local --file=./migrations/0001_initial.sql
+wrangler d1 execute parti_dev --local --file=./migrations/0001_initial.sql
 
 # Staging
-wrangler d1 execute parit_staging --file=./migrations/0001_initial.sql
+wrangler d1 execute parti_staging --file=./migrations/0001_initial.sql
 
 # Production
-wrangler d1 execute parit_prod --file=./migrations/0001_initial.sql
+wrangler d1 execute parti_prod --file=./migrations/0001_initial.sql
 ```
 
 ## 4. Frontend Configuration
@@ -69,7 +69,7 @@ The React frontend needs to know where the backend lives.
 
 1. Create a `.env.production` file:
 ```env
-VITE_API_BASE_URL=https://api.parit.sh
+VITE_API_BASE_URL=https://api.parti.sh
 VITE_ENVIRONMENT=production
 ```
 
@@ -81,7 +81,7 @@ VITE_ENVIRONMENT=production
 ```bash
 wrangler deploy --env staging
 ```
-Test the worker at `https://parit-backend-staging.<your-subdomain>.workers.dev` (or your custom domain).
+Test the worker at `https://parti-backend-staging.<your-subdomain>.workers.dev` (or your custom domain).
 
 ### Production Deployment
 ```bash

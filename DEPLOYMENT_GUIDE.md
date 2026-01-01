@@ -1,4 +1,4 @@
-# Parit Architecture - Deployment Guide
+# Parti Architecture - Deployment Guide
 
 ## Quick Start
 
@@ -134,13 +134,13 @@ If you prefer manual control:
 
 ```bash
 # Development
-wrangler d1 create parit_db_dev
+wrangler d1 create parti_db_dev
 
 # Staging
-wrangler d1 create parit_db_staging
+wrangler d1 create parti_db_staging
 
 # Production
-wrangler d1 create parit_db
+wrangler d1 create parti_db
 ```
 
 Copy the returned database IDs into respective `wrangler.toml` files.
@@ -149,26 +149,26 @@ Copy the returned database IDs into respective `wrangler.toml` files.
 
 ```bash
 # Development
-wrangler r2 bucket create parit-dev-artifacts
+wrangler r2 bucket create parti-dev-artifacts
 
 # Staging
-wrangler r2 bucket create parit-staging-artifacts
+wrangler r2 bucket create parti-staging-artifacts
 
 # Production
-wrangler r2 bucket create parit-prod-artifacts
+wrangler r2 bucket create parti-prod-artifacts
 ```
 
 ### Step 3: Apply Migrations
 
 ```bash
 # Development
-wrangler d1 execute parit_db_dev --file=./migrations/0001_initial.sql --remote
+wrangler d1 execute parti_db_dev --file=./migrations/0001_initial.sql --remote
 
 # Staging
-wrangler d1 execute parit_db_staging --file=./migrations/0001_initial.sql --remote
+wrangler d1 execute parti_db_staging --file=./migrations/0001_initial.sql --remote
 
 # Production
-wrangler d1 execute parit_db --file=./migrations/0001_initial.sql --remote
+wrangler d1 execute parti_db --file=./migrations/0001_initial.sql --remote
 ```
 
 ### Step 4: Deploy Each Worker
@@ -221,7 +221,7 @@ Expected response:
 
 ```bash
 # Check tables exist
-wrangler d1 execute parit_db --command="SELECT name FROM sqlite_master WHERE type='table';" --remote
+wrangler d1 execute parti_db --command="SELECT name FROM sqlite_master WHERE type='table';" --remote
 ```
 
 Expected tables:
@@ -301,7 +301,7 @@ jobs:
 
 ```bash
 # Create the database first
-wrangler d1 create parit_db
+wrangler d1 create parti_db
 
 # Update wrangler.toml with the database_id
 # Then run migration

@@ -2,7 +2,7 @@
 
 ## Why This Was Archived
 
-This directory contained obsolete legacy code from an earlier iteration of the Parit Architecture project. It has been safely archived and removed from the active codebase.
+This directory contained obsolete legacy code from an earlier iteration of the Parti Architecture project. It has been safely archived and removed from the active codebase.
 
 ## What Was Here
 

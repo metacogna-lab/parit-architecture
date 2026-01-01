@@ -69,7 +69,7 @@ SCRIPTS_DIR="$ROOT_DIR/scripts"
 
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║                                                            ║${NC}"
-echo -e "${BLUE}║        Parit Architecture - Full Stack Deployment         ║${NC}"
+echo -e "${BLUE}║        Parti Architecture - Full Stack Deployment         ║${NC}"
 echo -e "${BLUE}║                                                            ║${NC}"
 echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
 echo ""

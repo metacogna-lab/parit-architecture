@@ -1,9 +1,9 @@
-# Parit Architecture - API Reference
+# Parti Architecture - API Reference
 
 Complete documentation for the Cloudflare Workers backend API.
 
 **Base URL (Development):** `http://localhost:8787`
-**Base URL (Production):** `https://parit.metacogna.ai`
+**Base URL (Production):** `https://parti.metacogna.ai`
 
 All endpoints return JSON responses with CORS enabled.
 
@@ -632,13 +632,13 @@ See `/migrations/0001_initial.sql` for complete schema.
 
 **Fix:**
 ```bash
-wrangler d1 execute parit-dev --file=./migrations/0001_initial.sql
+wrangler d1 execute parti-dev --file=./migrations/0001_initial.sql
 ```
 
 ### Error: "Binding DB not found"
 **Cause:** `wrangler.toml` missing database_id
 
-**Fix:** Run `wrangler d1 create parit-dev` and update `wrangler.toml` with the ID
+**Fix:** Run `wrangler d1 create parti-dev` and update `wrangler.toml` with the ID
 
 ### Error: "Invalid UUID"
 **Cause:** Malformed project ID or checkpoint ID
@@ -648,7 +648,7 @@ wrangler d1 execute parit-dev --file=./migrations/0001_initial.sql
 ### Error: "Project Not Found" (404)
 **Cause:** Project doesn't exist in database or wrong environment
 
-**Fix:** Verify project exists: `wrangler d1 execute parit-dev --command="SELECT * FROM projects"`
+**Fix:** Verify project exists: `wrangler d1 execute parti-dev --command="SELECT * FROM projects"`
 
 ---
 

@@ -41,7 +41,7 @@ WORKERS=(
 )
 
 echo -e "${BLUE}════════════════════════════════════════════════════════════${NC}"
-echo -e "${BLUE}   Parit Architecture - Deploy All Workers${NC}"
+echo -e "${BLUE}   Parti Architecture - Deploy All Workers${NC}"
 echo -e "${BLUE}════════════════════════════════════════════════════════════${NC}"
 echo -e "Environment: ${YELLOW}$ENV${NC}"
 echo -e "Workers to deploy: ${GREEN}${#WORKERS[@]}${NC}"

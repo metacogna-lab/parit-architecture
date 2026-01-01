@@ -1,6 +1,6 @@
-# Parit Architecture - Deployment Setup Guide
+# Parti Architecture - Deployment Setup Guide
 
-This guide walks through setting up the Cloudflare infrastructure for the Parit Architecture system.
+This guide walks through setting up the Cloudflare infrastructure for the Parti Architecture system.
 
 ## Prerequisites
 
@@ -34,24 +34,24 @@ Create three D1 databases for dev, staging, and production:
 
 ```bash
 # Development database
-wrangler d1 create parit-dev
+wrangler d1 create parti-dev
 
 # Staging database
-wrangler d1 create parit-staging
+wrangler d1 create parti-staging
 
 # Production database
-wrangler d1 create parit-prod
+wrangler d1 create parti-prod
 ```
 
 Each command will output a `database_id`. **Copy these IDs** - you'll need them in the next step.
 
 Example output:
 ```
-✅ Successfully created DB 'parit-dev'
+✅ Successfully created DB 'parti-dev'
 
 [[d1_databases]]
 binding = "DB"
-database_name = "parit-dev"
+database_name = "parti-dev"
 database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
@@ -63,19 +63,19 @@ Update `wrangler.toml` with the database IDs from Step 3:
 # Development (default)
 [[d1_databases]]
 binding = "DB"
-database_name = "parit-dev"
+database_name = "parti-dev"
 database_id = "your-dev-database-id"
 
 # Staging
 [[env.staging.d1_databases]]
 binding = "DB"
-database_name = "parit-staging"
+database_name = "parti-staging"
 database_id = "your-staging-database-id"
 
 # Production
 [[env.production.d1_databases]]
 binding = "DB"
-database_name = "parit-prod"
+database_name = "parti-prod"
 database_id = "your-prod-database-id"
 ```
 
@@ -85,18 +85,18 @@ Run the schema migration for each environment:
 
 ```bash
 # Development
-wrangler d1 execute parit-dev --file=./migrations/0001_initial.sql
+wrangler d1 execute parti-dev --file=./migrations/0001_initial.sql
 
 # Staging
-wrangler d1 execute parit-staging --file=./migrations/0001_initial.sql
+wrangler d1 execute parti-staging --file=./migrations/0001_initial.sql
 
 # Production
-wrangler d1 execute parit-prod --file=./migrations/0001_initial.sql
+wrangler d1 execute parti-prod --file=./migrations/0001_initial.sql
 ```
 
 Expected output:
 ```
-🌀 Executing on parit-dev (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx):
+🌀 Executing on parti-dev (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx):
 🚣 Executed 15 commands in 1.234ms
 ```
 
@@ -106,7 +106,7 @@ Check that tables were created successfully:
 
 ```bash
 # Development
-wrangler d1 execute parit-dev --command="SELECT name FROM sqlite_master WHERE type='table'"
+wrangler d1 execute parti-dev --command="SELECT name FROM sqlite_master WHERE type='table'"
 
 # Expected output:
 # ┌────────────────────────┐
@@ -128,18 +128,18 @@ Create R2 buckets for artifact storage:
 
 ```bash
 # Development bucket
-wrangler r2 bucket create parit-dev-artifacts
+wrangler r2 bucket create parti-dev-artifacts
 
 # Staging bucket
-wrangler r2 bucket create parit-staging-artifacts
+wrangler r2 bucket create parti-staging-artifacts
 
 # Production bucket
-wrangler r2 bucket create parit-prod-artifacts
+wrangler r2 bucket create parti-prod-artifacts
 ```
 
 Expected output:
 ```
-✅ Created bucket 'parit-dev-artifacts'
+✅ Created bucket 'parti-dev-artifacts'
 ```
 
 ## Step 8: Set Up Secrets
@@ -187,8 +187,8 @@ Expected output:
 ```
 ✨ Built successfully
 ✨ Uploaded successfully
-✨ Deployed parit-supervisor successfully
-  https://parit-supervisor.your-subdomain.workers.dev
+✨ Deployed parti-supervisor successfully
+  https://parti-supervisor.your-subdomain.workers.dev
 ```
 
 ## Step 10: Deploy Agent Workers
@@ -247,13 +247,13 @@ After creating a test project, verify data was written:
 
 ```bash
 # Check projects table
-wrangler d1 execute parit-dev --command="SELECT * FROM projects LIMIT 5"
+wrangler d1 execute parti-dev --command="SELECT * FROM projects LIMIT 5"
 
 # Check artifacts table
-wrangler d1 execute parit-dev --command="SELECT id, project_id, agent_id, artifact_type, created_at FROM artifacts LIMIT 5"
+wrangler d1 execute parti-dev --command="SELECT id, project_id, agent_id, artifact_type, created_at FROM artifacts LIMIT 5"
 
 # Check checkpoints table
-wrangler d1 execute parit-dev --command="SELECT checkpoint_id, project_id, phase, created_at FROM checkpoints LIMIT 5"
+wrangler d1 execute parti-dev --command="SELECT checkpoint_id, project_id, phase, created_at FROM checkpoints LIMIT 5"
 ```
 
 ## Troubleshooting
@@ -265,10 +265,10 @@ wrangler d1 execute parit-dev --command="SELECT checkpoint_id, project_id, phase
 **Fix:**
 ```bash
 # Re-apply migration
-wrangler d1 execute parit-dev --file=./migrations/0001_initial.sql
+wrangler d1 execute parti-dev --file=./migrations/0001_initial.sql
 
 # Verify
-wrangler d1 execute parit-dev --command="SELECT * FROM schema_metadata"
+wrangler d1 execute parti-dev --command="SELECT * FROM schema_metadata"
 ```
 
 ### Error: "Binding DB not found"
@@ -287,7 +287,7 @@ wrangler d1 execute parit-dev --command="SELECT * FROM schema_metadata"
 wrangler r2 bucket list
 
 # Create if missing
-wrangler r2 bucket create parit-dev-artifacts
+wrangler r2 bucket create parti-dev-artifacts
 ```
 
 ### Error: "Service binding PRD_AGENT failed"
@@ -334,9 +334,9 @@ When adding new migrations:
 1. Create new file: `/migrations/0002_add_feature.sql`
 2. Apply to all environments:
    ```bash
-   wrangler d1 execute parit-dev --file=./migrations/0002_add_feature.sql
-   wrangler d1 execute parit-staging --file=./migrations/0002_add_feature.sql
-   wrangler d1 execute parit-prod --file=./migrations/0002_add_feature.sql
+   wrangler d1 execute parti-dev --file=./migrations/0002_add_feature.sql
+   wrangler d1 execute parti-staging --file=./migrations/0002_add_feature.sql
+   wrangler d1 execute parti-prod --file=./migrations/0002_add_feature.sql
    ```
 3. Update `schema_metadata` table:
    ```sql
@@ -351,7 +351,7 @@ To rollback a migration:
 1. Create rollback script: `/migrations/0002_rollback.sql`
 2. Apply:
    ```bash
-   wrangler d1 execute parit-prod --file=./migrations/0002_rollback.sql
+   wrangler d1 execute parti-prod --file=./migrations/0002_rollback.sql
    ```
 3. Update schema metadata to mark rollback
 
@@ -389,4 +389,4 @@ Estimate: **$0-5/month** for low-moderate usage (100 projects/day).
 For issues:
 - Cloudflare Docs: https://developers.cloudflare.com/d1/
 - Wrangler Docs: https://developers.cloudflare.com/workers/wrangler/
-- Project Issues: /Users/nullzero/Metacogna/parit-architecture/README.md
+- Project Issues: /Users/nullzero/Metacogna/parti-architecture/README.md

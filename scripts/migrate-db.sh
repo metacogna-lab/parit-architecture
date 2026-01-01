@@ -30,12 +30,12 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MIGRATIONS_DIR="$ROOT_DIR/migrations"
 
 # Database names from wrangler.toml
-DB_DEV="parit_db_dev"
-DB_STAGING="parit_db_staging"
-DB_PROD="parit_db"
+DB_DEV="parti_db_dev"
+DB_STAGING="parti_db_staging"
+DB_PROD="parti_db"
 
 echo -e "${BLUE}════════════════════════════════════════════════════════════${NC}"
-echo -e "${BLUE}   Parit Architecture - D1 Database Migration${NC}"
+echo -e "${BLUE}   Parti Architecture - D1 Database Migration${NC}"
 echo -e "${BLUE}════════════════════════════════════════════════════════════${NC}"
 echo -e "Target environment: ${YELLOW}$ENV${NC}\n"
 

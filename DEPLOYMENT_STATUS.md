@@ -1,4 +1,4 @@
-# Parit Architecture - Deployment Status
+# Parti Architecture - Deployment Status
 
 **Last Updated**: 2026-01-01
 **Environment**: Production-only configuration
@@ -14,7 +14,7 @@ export GEMINI_API_KEY="your_key_here"
 ./scripts/deploy-parallel.sh
 
 # Step 3: Verify deployment
-curl https://parit-supervisor.{your-subdomain}.workers.dev
+curl https://parti-supervisor.{your-subdomain}.workers.dev
 ```
 
 ---
@@ -25,9 +25,9 @@ curl https://parit-supervisor.{your-subdomain}.workers.dev
 
 | Component | Status | Details |
 |-----------|--------|---------|
-| **D1 Database** | ✅ Created | `parit_db_dev` (ID: `d3e6d447-a932-4d6a-96b0-23956b64897b`) |
+| **D1 Database** | ✅ Created | `parti_db_dev` (ID: `d3e6d447-a932-4d6a-96b0-23956b64897b`) |
 | **Database Schema** | ✅ Migrated | 8 tables: projects, artifacts, checkpoints, execution_traces, project_settings, agent_activity, schema_metadata, _cf_KV |
-| **R2 Bucket** | ✅ Created | `parit-artifacts` (Standard storage class) |
+| **R2 Bucket** | ✅ Created | `parti-artifacts` (Standard storage class) |
 | **Wrangler Configs** | ✅ Complete | All 8 workers configured (production-only) |
 | **Deployment Scripts** | ✅ Ready | 4 automation scripts + secret management |
 | **Test Framework** | ✅ Setup | Playwright with 36 E2E test scenarios |
@@ -47,10 +47,10 @@ curl https://parit-supervisor.{your-subdomain}.workers.dev
 All 8 workers now use **production-only** configuration (no staging/dev environments).
 
 ### Supervisor Worker
-- **Name**: `parit-supervisor`
+- **Name**: `parti-supervisor`
 - **Bindings**:
-  - D1: `parit_db_dev` (DB)
-  - R2: `parit-artifacts` (STORAGE)
+  - D1: `parti_db_dev` (DB)
+  - R2: `parti-artifacts` (STORAGE)
   - Services: All 7 agent workers (PRD_AGENT, DATA_AGENT, DESIGN_AGENT, LOGIC_AGENT, API_AGENT, FRONTEND_AGENT, DEPLOYMENT_AGENT)
 - **Secrets**: None required
 
@@ -60,13 +60,13 @@ Each agent worker requires:
 - **Bindings**: None (communicate via supervisor)
 
 **Workers**:
-1. `parit-prd-agent` - Product Requirements Document generation
-2. `parit-data-agent` - Data modeling and ERD design
-3. `parit-design-agent` - UI/UX wireframes and design systems
-4. `parit-logic-agent` - Business logic and algorithms
-5. `parit-api-agent` - API endpoint specifications
-6. `parit-frontend-agent` - Frontend code generation
-7. `parit-deployment-agent` - Deployment and CI/CD configuration
+1. `parti-prd-agent` - Product Requirements Document generation
+2. `parti-data-agent` - Data modeling and ERD design
+3. `parti-design-agent` - UI/UX wireframes and design systems
+4. `parti-logic-agent` - Business logic and algorithms
+5. `parti-api-agent` - API endpoint specifications
+6. `parti-frontend-agent` - Frontend code generation
+7. `parti-deployment-agent` - Deployment and CI/CD configuration
 
 ---
 
@@ -179,7 +179,7 @@ wrangler secret list -c workers/prd-agent/wrangler.toml
 wrangler deployments list
 
 # 2. Test supervisor endpoint
-curl https://parit-supervisor.{your-subdomain}.workers.dev
+curl https://parti-supervisor.{your-subdomain}.workers.dev
 
 # Expected response:
 # {
@@ -189,12 +189,12 @@ curl https://parit-supervisor.{your-subdomain}.workers.dev
 # }
 
 # 3. Test agent endpoint (via supervisor)
-curl -X POST https://parit-supervisor.{your-subdomain}.workers.dev/api/execute \
+curl -X POST https://parti-supervisor.{your-subdomain}.workers.dev/api/execute \
   -H "Content-Type: application/json" \
   -d '{"projectId":"test-123","stage":"prd","context":{}}'
 
 # 4. Verify database connectivity
-wrangler d1 execute parit_db_dev --command="SELECT COUNT(*) as count FROM projects" --remote
+wrangler d1 execute parti_db_dev --command="SELECT COUNT(*) as count FROM projects" --remote
 ```
 
 ### Run E2E Tests
@@ -232,7 +232,7 @@ cd workers/prd-agent && wrangler secret put GEMINI_API_KEY
 **Fix**:
 ```bash
 # Verify database exists
-wrangler d1 list | grep parit_db_dev
+wrangler d1 list | grep parti_db_dev
 
 # If not found, re-run migration
 ./scripts/migrate-db.sh
@@ -255,10 +255,10 @@ wrangler d1 list | grep parit_db_dev
 **Fix**:
 ```bash
 # Verify bucket exists
-wrangler r2 bucket list | grep parit-artifacts
+wrangler r2 bucket list | grep parti-artifacts
 
 # If not found, recreate
-wrangler r2 bucket create parit-artifacts
+wrangler r2 bucket create parti-artifacts
 ```
 
 ---
@@ -268,8 +268,8 @@ wrangler r2 bucket create parit-artifacts
 Before deploying to production:
 
 - [ ] **GEMINI_API_KEY set** for all 7 agent workers (`./scripts/set-secrets.sh`)
-- [ ] **D1 database migrated** (`parit_db_dev` with 8 tables)
-- [ ] **R2 bucket created** (`parit-artifacts`)
+- [ ] **D1 database migrated** (`parti_db_dev` with 8 tables)
+- [ ] **R2 bucket created** (`parti-artifacts`)
 - [ ] **All wrangler.toml files configured** (8 workers)
 - [ ] **E2E tests passing** (`bun playwright test`)
 - [ ] **Workers deployed** (`./scripts/deploy-parallel.sh`)
@@ -295,7 +295,7 @@ Before deploying to production:
 
 3. **Verify Deployment**:
    ```bash
-   curl https://parit-supervisor.{your-subdomain}.workers.dev
+   curl https://parti-supervisor.{your-subdomain}.workers.dev
    ```
 
 ### Short-term (Recommended)

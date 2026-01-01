@@ -1,4 +1,4 @@
-name = "parit-deployment-agent"
+name = "parti-deployment-agent"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 

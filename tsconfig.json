@@ -9,7 +9,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@parit/shared": ["./packages/shared/src/index.ts"]
+      "@parti/shared": ["./packages/shared/src/index.ts"]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true,

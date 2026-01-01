@@ -1,4 +1,4 @@
-import { RESPONSE_FORMAT_INSTRUCTION } from '@parit/shared';
+import { RESPONSE_FORMAT_INSTRUCTION } from '@parti/shared';
 
 export const SUPERVISOR_PROMPT = `You are the Supervisor of a software architecture team.
 Your goal is to orchestrate the following workers to build a complete system specification:

@@ -5,7 +5,7 @@ Use this prompt to have Gemini Pro (acting as the Architect) manage the data lif
 ## Prompt
 
 ```text
-You are the Database Migration Agent for Parit Architecture.
+You are the Database Migration Agent for Parti Architecture.
 
 Task: Generate a D1 SQL INSERT statement to seed a new project based on the current productSeed.
 

@@ -39,7 +39,7 @@
    - Output: Deployment Configuration (wrangler.toml + GitHub workflows)
 
 **Each worker includes:**
-- ✅ `package.json` with `@parit/shared` workspace dependency
+- ✅ `package.json` with `@parti/shared` workspace dependency
 - ✅ `tsconfig.json` extending root configuration
 - ✅ `wrangler.toml` with staging/production environments
 - ✅ `src/systemPrompts.ts` with comprehensive agent-specific instructions
@@ -424,16 +424,16 @@ cd workers/deployment-agent && wrangler secret put GEMINI_API_KEY
 2. **Apply D1 Migrations**:
 ```bash
 # Create development database
-wrangler d1 create parit-dev
-wrangler d1 execute parit-dev --file=./migrations/0001_initial.sql
+wrangler d1 create parti-dev
+wrangler d1 execute parti-dev --file=./migrations/0001_initial.sql
 
 # Create staging database
-wrangler d1 create parit-staging
-wrangler d1 execute parit-staging --file=./migrations/0001_initial.sql
+wrangler d1 create parti-staging
+wrangler d1 execute parti-staging --file=./migrations/0001_initial.sql
 
 # Create production database
-wrangler d1 create parit-prod
-wrangler d1 execute parit-prod --file=./migrations/0001_initial.sql
+wrangler d1 create parti-prod
+wrangler d1 execute parti-prod --file=./migrations/0001_initial.sql
 ```
 
 3. **Update wrangler.toml** with actual database IDs:
@@ -514,7 +514,7 @@ If you prefer to deploy individually:
 
 ```bash
 # 1. Migrate database
-wrangler d1 execute parit_db --file=./migrations/0001_initial.sql --remote
+wrangler d1 execute parti_db --file=./migrations/0001_initial.sql --remote
 
 # 2. Deploy each worker
 cd workers/supervisor && wrangler deploy
@@ -664,7 +664,7 @@ if (json.response && requiresInterrupt(agent.id)) {
 
 **Tasks A, B & HITL Interrupts are COMPLETE!** (25/31 tasks - 81%)
 
-The parit-architecture system now has:
+The parti-architecture system now has:
 - ✅ Complete multi-agent system with real AI
 - ✅ Full backend infrastructure with D1/R2
 - ✅ Working frontend integration

@@ -1,4 +1,4 @@
-import { RESPONSE_FORMAT_INSTRUCTION } from '@parit/shared';
+import { RESPONSE_FORMAT_INSTRUCTION } from '@parti/shared';
 
 export const DATA_WORKER_PROMPT = `You are a Database Architect. Ensure 3NF normalization. Group entities by module.
 

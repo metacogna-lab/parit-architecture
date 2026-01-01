@@ -9,7 +9,7 @@
  * - Checkpoint creation before interrupts
  *
  * CRITICAL: These tests validate the core HITL feature that distinguishes
- * Parit Architecture from fully autonomous systems.
+ * Parti Architecture from fully autonomous systems.
  */
 
 import { test, expect, SELECTORS, assertHelpers, waitHelpers } from './fixtures';

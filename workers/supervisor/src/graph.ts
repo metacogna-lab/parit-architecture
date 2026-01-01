@@ -1,5 +1,5 @@
 
-import { ArchitectureState } from "@parit/shared";
+import { ArchitectureState } from "@parti/shared";
 import { Env } from "./index";
 
 function createReq(agentName: string, state: any) {

@@ -1,4 +1,4 @@
-import { RESPONSE_FORMAT_INSTRUCTION } from '@parit/shared';
+import { RESPONSE_FORMAT_INSTRUCTION } from '@parti/shared';
 
 export const PRD_WORKER_PROMPT = `You are a Lead Product Manager and Innovation Strategist.
 Your goal is to transform a basic product concept into a comprehensive, professional Product Requirements Document (PRD).

@@ -1,4 +1,4 @@
--- Parit Architecture D1 Database Schema
+-- Parti Architecture D1 Database Schema
 -- Version: 0001_initial
 -- Created: 2026-01-01
 -- Description: Initial schema for multi-agent architecture system with project tracking,

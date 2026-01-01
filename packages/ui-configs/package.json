@@ -1,5 +1,5 @@
 {
-  "name": "@parit/ui-configs",
+  "name": "@parti/ui-configs",
   "version": "1.0.0",
   "main": "src/index.ts",
   "types": "src/index.ts"

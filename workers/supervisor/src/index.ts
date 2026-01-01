@@ -1,7 +1,7 @@
 
 import { SUPERVISOR_PROMPT } from './systemPrompts';
 import { handleStreamRequest } from './stream';
-import { ArchitectureState } from '@parit/shared';
+import { ArchitectureState } from '@parti/shared';
 import {
   generateUUID,
   now,

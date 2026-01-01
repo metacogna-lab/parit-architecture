@@ -1,4 +1,4 @@
-name = "parit-supervisor"
+name = "parti-supervisor"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 
@@ -7,7 +7,7 @@ compatibility_date = "2024-01-01"
 # ============================================================================
 [[d1_databases]]
 binding = "DB"
-database_name = "parit_db_dev"
+database_name = "parti_db_dev"
 database_id = "d3e6d447-a932-4d6a-96b0-23956b64897b"
 
 # ============================================================================
@@ -15,35 +15,35 @@ database_id = "d3e6d447-a932-4d6a-96b0-23956b64897b"
 # ============================================================================
 [[r2_buckets]]
 binding = "STORAGE"
-bucket_name = "parit-artifacts"
+bucket_name = "parti-artifacts"
 
 # ============================================================================
 # Service Bindings (Inter-Worker Communication)
 # ============================================================================
 [[services]]
 binding = "PRD_AGENT"
-service = "parit-prd-agent"
+service = "parti-prd-agent"
 
 [[services]]
 binding = "DATA_AGENT"
-service = "parit-data-agent"
+service = "parti-data-agent"
 
 [[services]]
 binding = "DESIGN_AGENT"
-service = "parit-design-agent"
+service = "parti-design-agent"
 
 [[services]]
 binding = "LOGIC_AGENT"
-service = "parit-logic-agent"
+service = "parti-logic-agent"
 
 [[services]]
 binding = "API_AGENT"
-service = "parit-api-agent"
+service = "parti-api-agent"
 
 [[services]]
 binding = "FRONTEND_AGENT"
-service = "parit-frontend-agent"
+service = "parti-frontend-agent"
 
 [[services]]
 binding = "DEPLOYMENT_AGENT"
-service = "parit-deployment-agent"
+service = "parti-deployment-agent"

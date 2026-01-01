@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "parit-architecture-monorepo",
+      "name": "parti-architecture-monorepo",
       "dependencies": {
         "@google/genai": "^1.34.0",
         "clsx": "^2.1.1",
@@ -26,91 +26,91 @@
       },
     },
     "packages/shared": {
-      "name": "@parit/shared",
+      "name": "@parti/shared",
       "version": "1.0.0",
       "dependencies": {
         "zod": "^3.22.4",
       },
     },
     "packages/ui-configs": {
-      "name": "@parit/ui-configs",
+      "name": "@parti/ui-configs",
       "version": "1.0.0",
     },
     "workers/api-agent": {
-      "name": "parit-api-agent",
+      "name": "parti-api-agent",
       "version": "1.0.0",
       "dependencies": {
-        "@parit/shared": "workspace:*",
+        "@parti/shared": "workspace:*",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240101.0",
       },
     },
     "workers/data-agent": {
-      "name": "parit-data-agent",
+      "name": "parti-data-agent",
       "version": "1.0.0",
       "dependencies": {
-        "@parit/shared": "workspace:*",
+        "@parti/shared": "workspace:*",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240101.0",
       },
     },
     "workers/deployment-agent": {
-      "name": "parit-deployment-agent",
+      "name": "parti-deployment-agent",
       "version": "1.0.0",
       "dependencies": {
-        "@parit/shared": "workspace:*",
+        "@parti/shared": "workspace:*",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240101.0",
       },
     },
     "workers/design-agent": {
-      "name": "parit-design-agent",
+      "name": "parti-design-agent",
       "version": "1.0.0",
       "dependencies": {
-        "@parit/shared": "workspace:*",
+        "@parti/shared": "workspace:*",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240101.0",
       },
     },
     "workers/frontend-agent": {
-      "name": "parit-frontend-agent",
+      "name": "parti-frontend-agent",
       "version": "1.0.0",
       "dependencies": {
-        "@parit/shared": "workspace:*",
+        "@parti/shared": "workspace:*",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240101.0",
       },
     },
     "workers/logic-agent": {
-      "name": "parit-logic-agent",
+      "name": "parti-logic-agent",
       "version": "1.0.0",
       "dependencies": {
-        "@parit/shared": "workspace:*",
+        "@parti/shared": "workspace:*",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240101.0",
       },
     },
     "workers/prd-agent": {
-      "name": "parit-prd-agent",
+      "name": "parti-prd-agent",
       "version": "1.0.0",
       "dependencies": {
-        "@parit/shared": "workspace:*",
+        "@parti/shared": "workspace:*",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240101.0",
       },
     },
     "workers/supervisor": {
-      "name": "parit-supervisor",
+      "name": "parti-supervisor",
       "version": "1.0.0",
       "dependencies": {
-        "@parit/shared": "workspace:*",
+        "@parti/shared": "workspace:*",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240101.0",
@@ -286,9 +286,9 @@
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.31", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="],
 
-    "@parit/shared": ["@parit/shared@workspace:packages/shared"],
+    "@parti/shared": ["@parti/shared@workspace:packages/shared"],
 
-    "@parit/ui-configs": ["@parit/ui-configs@workspace:packages/ui-configs"],
+    "@parti/ui-configs": ["@parti/ui-configs@workspace:packages/ui-configs"],
 
     "@pkgjs/parseargs": ["@pkgjs/parseargs@0.11.0", "", {}, "sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg=="],
 
@@ -534,21 +534,21 @@
 
     "pako": ["pako@1.0.11", "", {}, "sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw=="],
 
-    "parit-api-agent": ["parit-api-agent@workspace:workers/api-agent"],
+    "parti-api-agent": ["parti-api-agent@workspace:workers/api-agent"],
 
-    "parit-data-agent": ["parit-data-agent@workspace:workers/data-agent"],
+    "parti-data-agent": ["parti-data-agent@workspace:workers/data-agent"],
 
-    "parit-deployment-agent": ["parit-deployment-agent@workspace:workers/deployment-agent"],
+    "parti-deployment-agent": ["parti-deployment-agent@workspace:workers/deployment-agent"],
 
-    "parit-design-agent": ["parit-design-agent@workspace:workers/design-agent"],
+    "parti-design-agent": ["parti-design-agent@workspace:workers/design-agent"],
 
-    "parit-frontend-agent": ["parit-frontend-agent@workspace:workers/frontend-agent"],
+    "parti-frontend-agent": ["parti-frontend-agent@workspace:workers/frontend-agent"],
 
-    "parit-logic-agent": ["parit-logic-agent@workspace:workers/logic-agent"],
+    "parti-logic-agent": ["parti-logic-agent@workspace:workers/logic-agent"],
 
-    "parit-prd-agent": ["parit-prd-agent@workspace:workers/prd-agent"],
+    "parti-prd-agent": ["parti-prd-agent@workspace:workers/prd-agent"],
 
-    "parit-supervisor": ["parit-supervisor@workspace:workers/supervisor"],
+    "parti-supervisor": ["parti-supervisor@workspace:workers/supervisor"],
 
     "path-key": ["path-key@3.1.1", "", {}, "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q=="],
 

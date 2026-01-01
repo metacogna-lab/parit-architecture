@@ -56,7 +56,7 @@ fi
 deploy_worker() {
     local WORKER=$1
     local WORKER_DIR="$WORKERS_DIR/$WORKER"
-    local LOG_FILE="/tmp/parit-deploy-$WORKER.log"
+    local LOG_FILE="/tmp/parti-deploy-$WORKER.log"
 
     if [ ! -d "$WORKER_DIR" ]; then
         echo -e "${RED}❌ $WORKER: Directory not found${NC}" | tee "$LOG_FILE"
@@ -133,6 +133,6 @@ if [ $FAILED -eq 0 ]; then
     exit 0
 else
     echo -e "${RED}⚠️  $FAILED worker(s) failed${NC}"
-    echo -e "Check logs in /tmp/parit-deploy-*.log"
+    echo -e "Check logs in /tmp/parti-deploy-*.log"
     exit 1
 fi

@@ -1,5 +1,5 @@
 {
-  "name": "parit-architecture-monorepo",
+  "name": "parti-architecture-monorepo",
   "private": true,
   "output": "dist",
   "main": "dist/index.js",

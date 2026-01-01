@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ============================================================================
-# Parit Architecture - Set Cloudflare Secrets
+# Parti Architecture - Set Cloudflare Secrets
 # ============================================================================
 # This script sets the GEMINI_API_KEY secret for all agent workers
 #
@@ -40,7 +40,7 @@ AGENT_WORKERS=(
 )
 
 echo -e "${BLUE}============================================================================${NC}"
-echo -e "${BLUE}Parit Architecture - Set Cloudflare Secrets${NC}"
+echo -e "${BLUE}Parti Architecture - Set Cloudflare Secrets${NC}"
 echo -e "${BLUE}============================================================================${NC}"
 echo ""
 
@@ -129,7 +129,7 @@ echo ""
 if [ $SUCCESS_COUNT -gt 0 ]; then
     echo -e "${BLUE}Next steps:${NC}"
     echo -e "  1. Deploy workers: ${GREEN}./scripts/deploy-parallel.sh${NC}"
-    echo -e "  2. Test deployment: ${GREEN}curl https://parit-supervisor.{your-subdomain}.workers.dev${NC}"
+    echo -e "  2. Test deployment: ${GREEN}curl https://parti-supervisor.{your-subdomain}.workers.dev${NC}"
     echo ""
 fi
 

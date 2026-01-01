@@ -1,5 +1,5 @@
 {
-  "name": "parit-deployment-agent",
+  "name": "parti-deployment-agent",
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
@@ -8,7 +8,7 @@
     "deploy:prod": "wrangler deploy --env production"
   },
   "dependencies": {
-    "@parit/shared": "workspace:*"
+    "@parti/shared": "workspace:*"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240101.0"

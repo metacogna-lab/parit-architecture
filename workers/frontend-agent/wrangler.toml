@@ -1,4 +1,4 @@
-name = "parit-frontend-agent"
+name = "parti-frontend-agent"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 

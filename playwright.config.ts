@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Playwright E2E Test Configuration for Parit Architecture
+ * Playwright E2E Test Configuration for Parti Architecture
  *
  * Tests the complete integration between:
  * - React Vite frontend (http://localhost:3000)

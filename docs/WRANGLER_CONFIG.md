@@ -5,7 +5,7 @@ This guide covers the `wrangler.toml` configuration for the Triple-Tier environm
 ## 1. Infrastructure Mapping (wrangler.toml)
 
 ```toml
-name = "parit-backend"
+name = "parti-backend"
 main = "src/index.ts"
 compatibility_date = "2026-01-01"
 
@@ -17,36 +17,36 @@ DEFAULT_PROVIDER = "google"
 vars = { ENVIRONMENT = "staging" }
 [[env.staging.d1_databases]]
 binding = "DB"
-database_name = "parit_staging_db"
+database_name = "parti_staging_db"
 database_id = "<STAGING_D1_UUID>"
 
 [[env.staging.r2_buckets]]
 binding = "STORAGE"
-bucket_name = "parit-staging-artifacts"
+bucket_name = "parti-staging-artifacts"
 
 # --- PRODUCTION ---
 [env.production]
 vars = { ENVIRONMENT = "production" }
 [[env.production.d1_databases]]
 binding = "DB"
-database_name = "parit_prod_db"
+database_name = "parti_prod_db"
 database_id = "<PROD_D1_UUID>"
 
 [[env.production.r2_buckets]]
 binding = "STORAGE"
-bucket_name = "parit-prod-artifacts"
+bucket_name = "parti-prod-artifacts"
 
 # --- DEVELOPMENT (Local) ---
 [env.dev]
 vars = { ENVIRONMENT = "dev" }
 [[env.dev.d1_databases]]
 binding = "DB"
-database_name = "parit_dev_db"
+database_name = "parti_dev_db"
 database_id = "<DEV_D1_UUID>"
 
 [[env.dev.r2_buckets]]
 binding = "STORAGE"
-bucket_name = "parit-dev-artifacts"
+bucket_name = "parti-dev-artifacts"
 ```
 
 ## 2. Deployment & Merge Management

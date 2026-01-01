@@ -1,5 +1,5 @@
 /**
- * Utility functions for Parit Supervisor Worker
+ * Utility functions for Parti Supervisor Worker
  */
 
 /**

@@ -1,5 +1,5 @@
 /**
- * Playwright Test Fixtures for Parit Architecture E2E Tests
+ * Playwright Test Fixtures for Parti Architecture E2E Tests
  *
  * Provides reusable utilities for:
  * - Database cleanup

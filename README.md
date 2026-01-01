@@ -1,4 +1,4 @@
-# parit-architecture-monorepo
+# parti-architecture-monorepo
 
 To install dependencies:
 
