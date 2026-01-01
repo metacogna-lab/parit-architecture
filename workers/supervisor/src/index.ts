@@ -52,6 +52,53 @@ interface ExecutionContext {
   passThroughOnException(): void;
 }
 
+type GatewayClaims = {
+  projectId: string;
+  route: string;
+  scopes?: string[];
+  exp?: number;
+};
+
+const jwtEncoder = new TextEncoder();
+const jwtDecoder = new TextDecoder();
+
+const base64UrlToUint8 = (value: string) => {
+  const normalized = value.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(value.length / 4) * 4, '=');
+  const binary = atob(normalized);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
+};
+
+const decodeGatewayPayload = (segment: string) => {
+  const decoded = base64UrlToUint8(segment);
+  return JSON.parse(jwtDecoder.decode(decoded));
+};
+
+async function verifyGatewayToken(token: string, secret: string): Promise<GatewayClaims> {
+  const [headerSegment, payloadSegment, signatureSegment] = token.split('.');
+  if (!headerSegment || !payloadSegment || !signatureSegment) {
+    throw new Error('invalid_token');
+  }
+
+  const data = `${headerSegment}.${payloadSegment}`;
+  const key = await crypto.subtle.importKey('raw', jwtEncoder.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']);
+  const valid = await crypto.subtle.verify('HMAC', key, base64UrlToUint8(signatureSegment), jwtEncoder.encode(data));
+  if (!valid) {
+    throw new Error('invalid_signature');
+  }
+
+  const claims = decodeGatewayPayload(payloadSegment) as GatewayClaims;
+  if (claims.exp && claims.exp * 1000 < Date.now()) {
+    throw new Error('token_expired');
+  }
+  return claims;
+}
+
+const SUPERVISOR_ALLOWED_ROUTES = new Set(['BUILD', 'CORE', 'AUTH']);
+
 export interface Env {
   PRD_AGENT: Fetcher;
   DATA_AGENT: Fetcher;
@@ -59,6 +106,7 @@ export interface Env {
   AGENT_ROLE: string;
   DB: D1Database;
   STORAGE: R2Bucket;
+  GATEWAY_JWT_SECRET?: string;
 }
 
 export default {
@@ -77,6 +125,23 @@ export default {
 
     if (method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
+    }
+
+    if (!env.GATEWAY_JWT_SECRET) {
+      return new Response(JSON.stringify({ error: 'Gateway secret missing' }), { status: 500, headers: corsHeaders });
+    }
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Missing gateway token' }), { status: 401, headers: corsHeaders });
+    }
+    try {
+      const claims = await verifyGatewayToken(authHeader.replace('Bearer ', '').trim(), env.GATEWAY_JWT_SECRET);
+      if (!SUPERVISOR_ALLOWED_ROUTES.has(claims.route)) {
+        return new Response(JSON.stringify({ error: 'Token route not permitted' }), { status: 403, headers: corsHeaders });
+      }
+    } catch (err: any) {
+      const status = err?.message === 'token_expired' ? 401 : 403;
+      return new Response(JSON.stringify({ error: 'Invalid gateway token' }), { status, headers: corsHeaders });
     }
 
     // --- READ ENDPOINTS (Hydration) ---
