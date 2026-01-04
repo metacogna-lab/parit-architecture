@@ -1,7 +1,7 @@
 {
   "name": "parti-supervisor",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "src/index.js",
   "scripts": {
     "dev": "wrangler dev",
     "deploy:staging": "wrangler deploy --env staging",
@@ -11,6 +11,7 @@
     "@parti/shared": "workspace:*"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240101.0"
+    "@cloudflare/workers-types": "^4.20260101.0",
+    "wrangler": "^4.54.0"
   }
 }

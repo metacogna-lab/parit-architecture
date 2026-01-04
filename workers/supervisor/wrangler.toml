@@ -1,5 +1,5 @@
 name = "parti-supervisor"
-main = "src/index.ts"
+main = "src/index.js"
 compatibility_date = "2024-01-01"
 
 # ============================================================================
@@ -47,3 +47,36 @@ service = "parti-frontend-agent"
 [[services]]
 binding = "DEPLOYMENT_AGENT"
 service = "parti-deployment-agent"
+
+# ============================================================================
+# Production Environment Configuration
+# ============================================================================
+[env.production]
+# Service bindings for production environment (workers deployed with -production suffix)
+[[env.production.services]]
+binding = "PRD_AGENT"
+service = "parti-prd-agent-production"
+
+[[env.production.services]]
+binding = "DATA_AGENT"
+service = "parti-data-agent-production"
+
+[[env.production.services]]
+binding = "DESIGN_AGENT"
+service = "parti-design-agent-production"
+
+[[env.production.services]]
+binding = "LOGIC_AGENT"
+service = "parti-logic-agent-production"
+
+[[env.production.services]]
+binding = "API_AGENT"
+service = "parti-api-agent-production"
+
+[[env.production.services]]
+binding = "FRONTEND_AGENT"
+service = "parti-frontend-agent-production"
+
+[[env.production.services]]
+binding = "DEPLOYMENT_AGENT"
+service = "parti-deployment-agent-production"
