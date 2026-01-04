@@ -1,6 +1,11 @@
 name = "parti-supervisor"
 main = "src/index.js"
 compatibility_date = "2024-01-01"
+workers_dev = false
+
+routes = [
+  { pattern = "build.metacogna.ai/*", zone_name = "metacogna.ai" }
+]
 
 # ============================================================================
 # D1 Database Bindings
